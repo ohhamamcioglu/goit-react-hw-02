@@ -1,17 +1,13 @@
-const Feedback = ({good,neutral,bad,total,possitive})=>{
-    return total === 0 ?
-    (<p>No feedback yet</p>):
-    (
-        <div>{}
-            <p>Good : {good}</p>
-            <p>Neutral :{neutral}</p>
-            <p>Bad : {bad}</p>
-            <p>Total : {total}</p>
-            <p>Possitive : {possitive}%</p>           
-        </div>
-    )
-    
-
+function Feedback({ good, neutral, bad, total, positive }) {
+  return (
+    <div>
+      <p>Good: {good}</p>
+      <p>Neutral: {neutral}</p>
+      <p>Bad: {bad}</p>
+      <p>Total: {total}</p>
+      <p>Positive: {positive}%</p>
+    </div>
+  );
 }
 
-export default Feedback
+export default Feedback;

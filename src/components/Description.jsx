@@ -1,4 +1,4 @@
-const Description = () => {
+function Description() {
   return (
     <div>
       <h1>Sip Happens Café</h1>
@@ -8,5 +8,6 @@ const Description = () => {
       </p>
     </div>
   );
-};
+}
+
 export default Description;

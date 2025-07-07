@@ -1,15 +1,14 @@
-const Options = ({good,neutral,bad,reset,total})=>{
-
-    return(
-        <div>
-            <button onClick={good}> Good </button>
-            <button onClick={neutral}> Neutral </button>
-            <button onClick={bad}> Bad </button>
-            {total > 0 && 
-               <button onClick={reset}>Reset</button> }
-        </div>
-    )
-
+function Options({ updateFeedback, resetFeedback, totalFeedback }) {
+  return (
+    <div>
+      <button onClick={() => updateFeedback("good")}>Good</button>
+      <button onClick={() => updateFeedback("neutral")}>Neutral</button>
+      <button onClick={() => updateFeedback("bad")}>Bad</button>
+      {totalFeedback > 0 && (
+        <button onClick={resetFeedback}>Reset</button>
+      )}
+    </div>
+  );
 }
 
-export default Options
+export default Options;

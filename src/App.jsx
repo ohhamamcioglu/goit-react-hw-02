@@ -1,70 +1,56 @@
-import { useEffect, useState } from "react";
-
 import "./App.css";
+import { useState } from "react";
 import Description from "./components/Description";
 import Options from "./components/Options";
 import Feedback from "./components/Feedback";
+import Notification from "./components/Notification";
 
 function App() {
   const [veri, setVeri] = useState(() => {
-    const saved = window.localStorage.getItem("feedback-veri");
+    const saved = localStorage.getItem("feedback-data");
     return saved ? JSON.parse(saved) : { good: 0, neutral: 0, bad: 0 };
   });
 
-  const updateGood = () => {
+  const updateFeedback = (feedbackType) => {
     setVeri((prev) => ({
       ...prev,
-      good: prev.good + 1,
+      [feedbackType]: prev[feedbackType] + 1,
     }));
   };
 
-  const updateNeutral = () => {
-    setVeri((prev) => ({
-      ...prev,
-      neutral: prev.neutral + 1,
-    }));
-  };
-
-  const updateBad = () => {
-    setVeri((prev) => ({
-      ...prev,
-      bad: prev.bad + 1,
-    }));
-  };
-
-  const reset = () => {
-    setVeri({
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    });
+  const resetFeedback = () => {
+    setVeri({ good: 0, neutral: 0, bad: 0 });
   };
 
   const totalFeedback = veri.good + veri.neutral + veri.bad;
 
-  const possitive =
-    totalFeedback > 0 ? Math.round((veri.good / totalFeedback) * 100) : 0;
+  const positiveFeedback =
+    totalFeedback > 0
+      ? Math.round((veri.good / totalFeedback) * 100)
+      : 0;
 
-  useEffect(() => {
-    window.localStorage.setItem("feedback-veri", JSON.stringify(veri));
-  }, [veri]);
+  // localStorage güncellemesi
+  localStorage.setItem("feedback-data", JSON.stringify(veri));
 
   return (
     <>
       <Description />
       <Options
-        good={updateGood}
-        neutral={updateNeutral}
-        bad={updateBad}
-        reset={reset}
-        total={totalFeedback}
+        updateFeedback={updateFeedback}
+        resetFeedback={resetFeedback}
+        totalFeedback={totalFeedback}
       />
-      <Feedback 
-        good={veri.good}
-        neutral={veri.neutral}
-        bad={veri.bad}
-        total={totalFeedback}
-        possitive={possitive}/>
+      {totalFeedback > 0 ? (
+        <Feedback
+          good={veri.good}
+          neutral={veri.neutral}
+          bad={veri.bad}
+          total={totalFeedback}
+          positive={positiveFeedback}
+        />
+      ) : (
+        <Notification message="No feedback given yet." />
+      )}
     </>
   );
 }
